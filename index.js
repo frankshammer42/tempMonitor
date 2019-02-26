@@ -76,7 +76,7 @@ function postData(device){
 		})
 		.then((res) => {
 		  //console.log(`statusCode: ${res.statusCode}`)
-		  console.log(res.status);
+		  console.log("status code:" + res.status);
 		})
 		.catch((error) => {
 		  console.error(error);
