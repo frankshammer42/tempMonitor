@@ -57,11 +57,11 @@ function postData(device){
 		data: jsonString
 	})
     .then((res) => {
-      console.log(`statusCode: ${res.statusCode}`)
-      //console.log(res)
+      //console.log(`statusCode: ${res.statusCode}`)
+	  console.log(res);
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
     })
 }
 
