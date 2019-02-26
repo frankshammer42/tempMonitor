@@ -54,14 +54,7 @@ function checkSensors() {
 }
 
 function switchLight(device){
-	if (switch_counter%2 === 0){
-		ledState = 1;
-	}
-	else{
-		ledState = 0;
-	}
-	led.writeSync(ledState);
-	switch_counter += 1;
+	console.log(device.potentiometer);
 }
 
 function postData(device){
@@ -74,7 +67,8 @@ function postData(device){
 	})
     .then((res) => {
       //console.log(`statusCode: ${res.statusCode}`)
-	  console.log(res);
+	  console.log(res.status);
+	  );
     })
     .catch((error) => {
       console.error(error);
