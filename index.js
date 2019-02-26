@@ -10,14 +10,18 @@
 
 const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library const sampleRate = { speedHz: 20000 };  // ADC sample rate
 const axios = require('axios'); let device = {};      // object for device characteristics
+const Gpio = require('onoff').Gpio; // include onoff library
 const sampleRate = { speedHz: 20000 };
-let channels = [];    // list for ADC channels
-
+let channels = [];    // list for ADC channels 
 // open two ADC channels and push them to the channels list:
 let tempSensor = mcpadc.open(0, sampleRate, addNewChannel);
 channels.push(tempSensor);
 let potentiometer = mcpadc.open(2, sampleRate, addNewChannel);
 channels.push(potentiometer);
+//control lights
+let led = new Gpio(17, 'out');
+let ledState = 0;
+let switch_counter = 0;
 
 // callback for open() commands. Doesn't do anything here:
 function addNewChannel(error) {
@@ -44,8 +48,20 @@ function checkSensors() {
   if (channels.length > 1) {
     tempSensor.read(getTemperature);
     potentiometer.read(getKnob);
-	postData(device)
+	postData(device);
+	switchLight(device);
   }
+}
+
+function switchLight(device){
+	if (switch_counter%2 === 0){
+		ledState = 1;
+	}
+	else{
+		ledState = 0;
+	}
+	led.writeSync(ledState);
+	switch_counter += 1;
 }
 
 function postData(device){
@@ -81,9 +97,5 @@ function test(){
 	})
 }
 
-test();
-
-
-
 // set an interval once a second to read the sensors:
-//setInterval(checkSensors, 3000);
+setInterval(checkSensors, 3000);
