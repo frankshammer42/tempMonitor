@@ -54,8 +54,8 @@ function checkSensors() {
 function switchLight(device){
 	let current_roter_reading = device.potentiometer;
 	let mapped_temperature = getMappedTemperature(current_roter_reading);
-	console.log(mapped_temperature);
-	console.log(device.temperature);
+	console.log("Rotary reading mapped temp value: " + mapped_temperature);
+	console.log("Current temp is " + device.temperature);
 	if (mapped_temperature > device.temperature){
 		ledState = 1;
 	}
@@ -76,7 +76,8 @@ function postData(device){
 		})
 		.then((res) => {
 		  //console.log(`statusCode: ${res.statusCode}`)
-		  console.log("status code:" + res.status);
+		  console.log("Status code: " + res.status);
+			console.log("###########################"); 
 		})
 		.catch((error) => {
 		  console.error(error);
@@ -110,4 +111,4 @@ function getMappedTemperature(roter_value){
 }
 
 // set an interval once a second to read the sensors:
-setInterval(checkSensors, 1000);
+setInterval(checkSensors, 3000);
