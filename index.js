@@ -10,6 +10,7 @@
 
 const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library
 const sampleRate = { speedHz: 20000 };  // ADC sample rate
+const axios = require('axios');
 let device = {};      // object for device characteristics
 let channels = [];    // list for ADC channels
 
@@ -44,9 +45,27 @@ function checkSensors() {
   if (channels.length > 1) {
     tempSensor.read(getTemperature);
     potentiometer.read(getKnob);
-    console.log(device);
+	postData(device)
   }
 }
 
+function postData(device){
+	let tempObj = {"temperature":device.temperature};
+	let jsonString = JSON.stringfy(tempObj);
+	axios.post('https://tigoe.io/data', {
+		macAddress: 'b8:27:eb:d3:ef:0f',
+		sessionKey: 'bc3e8860-5eb8-4554-af1d-16aee0d01b4f',
+		data: jsonString
+	})
+    .then((res) => {
+      console.log(`statusCode: ${res.statusCode}`)
+      console.log(res)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
+
 // set an interval once a second to read the sensors:
-setInterval(checkSensors, 1000);
+setInterval(checkSensors, 3000);
