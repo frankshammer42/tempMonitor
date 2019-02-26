@@ -23,6 +23,7 @@ let led = new Gpio(17, 'out');
 let ledState = 0;
 let switch_counter = 0;
 
+
 // callback for open() commands. Doesn't do anything here:
 function addNewChannel(error) {
   if (error) throw error;
@@ -60,20 +61,22 @@ function switchLight(device){
 }
 
 function postData(device){
-	let tempObj = {"temperature":device.temperature};
-	let jsonString = JSON.stringify(tempObj);
-	axios.post('https://tigoe.io/data', {
-		macAddress: 'b8:27:eb:d3:ef:0f',
-		sessionKey: 'bc3e8860-5eb8-4554-af1d-16aee0d01b4f',
-		data: jsonString
-	})
-    .then((res) => {
-      //console.log(`statusCode: ${res.statusCode}`)
-	  console.log(res.status);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+	if (device.temperature <= 40 && device.temperature >= 0){
+		let tempObj = {"temperature":device.temperature};
+		let jsonString = JSON.stringify(tempObj);
+		axios.post('https://tigoe.io/data', {
+			macAddress: 'b8:27:eb:d3:ef:0f',
+			sessionKey: 'bc3e8860-5eb8-4554-af1d-16aee0d01b4f',
+			data: jsonString
+		})
+		.then((res) => {
+		  //console.log(`statusCode: ${res.statusCode}`)
+		  console.log(res.status);
+		})
+		.catch((error) => {
+		  console.error(error);
+		})
+	}
 }
 
 function test(){
