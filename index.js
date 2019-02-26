@@ -44,7 +44,7 @@ function checkSensors() {
   function getKnob(error, reading) {
     if (error) throw error;
     device.potentiometer = reading.value;
-	  if (device.potentiometer !== 0){
+	  if (device.potentiometer != 0){
 		  console.log(device.potentiometer);
 	  } 
   }
