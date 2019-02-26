@@ -10,6 +10,7 @@
 
 const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library const sampleRate = { speedHz: 20000 };  // ADC sample rate
 const axios = require('axios'); let device = {};      // object for device characteristics
+const sampleRate = { speedHz: 20000 };
 let channels = [];    // list for ADC channels
 
 // open two ADC channels and push them to the channels list:
