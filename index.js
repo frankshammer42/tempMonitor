@@ -8,8 +8,7 @@
   by Tom Igoe
 */
 
-const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library
-const sampleRate = { speedHz: 20000 };  // ADC sample rate
+const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library const sampleRate = { speedHz: 20000 };  // ADC sample rate
 const axios = require('axios'); let device = {};      // object for device characteristics
 let channels = [];    // list for ADC channels
 
@@ -58,7 +57,7 @@ function postData(device){
 	})
     .then((res) => {
       console.log(`statusCode: ${res.statusCode}`)
-      console.log(res)
+      //console.log(res)
     })
     .catch((error) => {
       console.error(error)
