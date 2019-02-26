@@ -1,7 +1,6 @@
 /*
   MCP3008 ADC reader
-
-  Reads two channels of an MCP3008 analog-to-digital converter
+Reads two channels of an MCP3008 analog-to-digital converter
   and prints them out. 
 
   created 17 Feb 2019
@@ -96,4 +95,4 @@ function test(){
 }
 
 // set an interval once a second to read the sensors:
-setInterval(checkSensors, 1000);
+setInterval(checkSensors, 10000);
