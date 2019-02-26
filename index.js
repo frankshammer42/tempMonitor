@@ -55,7 +55,7 @@ function checkSensors() {
     tempSensor.read(getTemperature);
     potentiometer.read(getKnob);
 	postData(device);
-	switchLight(device);
+	//switchLight(device);
   }
 }
 
