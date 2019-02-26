@@ -1,15 +1,5 @@
-/*
-  MCP3008 ADC reader
-Reads two channels of an MCP3008 analog-to-digital converter
-  and prints them out. 
-
-  created 17 Feb 2019
-  by Tom Igoe
-*/
-
 const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library const sampleRate = { speedHz: 20000 };  // ADC sample rate
-const axios = require('axios'); let device = {};      // object for device characteristics
-const Gpio = require('onoff').Gpio; // include onoff library
+const axios = require('axios'); let device = {};      // object for device characteristics const Gpio = require('onoff').Gpio; // include onoff library
 const sampleRate = { speedHz: 20000 };
 let channels = [];    // list for ADC channels 
 // open two ADC channels and push them to the channels list:
@@ -35,18 +25,18 @@ function checkSensors() {
     if (error) throw error;
     // range is 0-1. Convert to Celsius (see TMP36 data sheet for details)
     device.temperature = (reading.value * 3.3 - 0.5) * 100;
-	  if (device.temperature < 40 && device.temperature > 0){
-		  console.log(device.temperature);
-	  }
+	  //if (device.temperature < 40 && device.temperature > 0){
+		  //console.log(device.temperature);
+	  //}
   }
   
   // callback function for potentiometer.read():
   function getKnob(error, reading) {
     if (error) throw error;
     device.potentiometer = reading.value;
-	  if (device.potentiometer != 0){
-		  console.log(device.potentiometer);
-	  } 
+	  //if (device.potentiometer != 0){
+		  //console.log(device.potentiometer);
+	  //} 
   }
 
   // make sure there are two ADC channels open to read,
@@ -55,12 +45,22 @@ function checkSensors() {
     tempSensor.read(getTemperature);
     potentiometer.read(getKnob);
 	postData(device);
-	//switchLight(device);
+	switchLight(device);
   }
 }
 
 function switchLight(device){
-	console.log(device.potentiometer);
+	let current_roter_reading = device.potentiometer;
+	let mapped_temperature = getMappedTemperature(current_roter_reading);
+	console.log(mapped_temperature);
+	console.log(device.temperature);
+	if (mapped_temperature > device.temperature){
+		ledState = 1;
+	}
+	else{
+		ledState = 0;
+	}
+	led.writeSync(ledState);
 }
 
 function postData(device){
@@ -96,6 +96,15 @@ function test(){
 	.catch((error) => {
 	  console.error(error);
 	})
+}
+
+function scale(num, in_min, in_max, out_min, out_max){
+  return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function getMappedTemperature(roter_value){
+	let temperature_value = scale(roter_value, 0, 1, 0, 40);
+	return temperature_value;
 }
 
 // set an interval once a second to read the sensors:
