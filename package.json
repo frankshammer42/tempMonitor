@@ -15,6 +15,7 @@
   "author": "Tom Igoe",
   "license": "MIT",
   "dependencies": {
-    "mcp-spi-adc": "^2.0.4"
+    "mcp-spi-adc": "^2.0.4",
+	"axios": "^0.18.0"
   }
 }
