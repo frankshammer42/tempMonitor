@@ -1,5 +1,7 @@
 const mcpadc = require('mcp-spi-adc');  // include the MCP SPI library const sampleRate = { speedHz: 20000 };  // ADC sample rate
-const axios = require('axios'); let device = {};      // object for device characteristics const Gpio = require('onoff').Gpio; // include onoff library
+const axios = require('axios'); 
+const Gpio = require('onoff').Gpio;
+let device = {};      // object for device characteristics const Gpio = require('onoff').Gpio; // include onoff library
 const sampleRate = { speedHz: 20000 };
 let channels = [];    // list for ADC channels 
 // open two ADC channels and push them to the channels list:
