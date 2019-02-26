@@ -35,14 +35,18 @@ function checkSensors() {
     if (error) throw error;
     // range is 0-1. Convert to Celsius (see TMP36 data sheet for details)
     device.temperature = (reading.value * 3.3 - 0.5) * 100;
-	  console.log(device.temperature);
+	  if (device.temperature < 40 && device.temperature > 0){
+		  console.log(device.temperature);
+	  }
   }
   
   // callback function for potentiometer.read():
   function getKnob(error, reading) {
     if (error) throw error;
     device.potentiometer = reading.value;
-	  console.log(device.potentiometer);
+	  if (device.potentiometer !== 0){
+		  console.log(device.potentiometer);
+	  } 
   }
 
   // make sure there are two ADC channels open to read,
@@ -95,4 +99,4 @@ function test(){
 }
 
 // set an interval once a second to read the sensors:
-setInterval(checkSensors, 10000);
+setInterval(checkSensors, 1000);
