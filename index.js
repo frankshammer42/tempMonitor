@@ -65,6 +65,25 @@ function postData(device){
     })
 }
 
+function test(){
+	axios.get('https://tigoe.io/data', {
+	  params: {
+		macAddress: 'b8:27:eb:d3:ef:0f',
+		sessionKey: 'bc3e8860-5eb8-4554-af1d-16aee0d01b4f',
+	  }
+	})
+	.then((res) => {
+	  //console.log(`statusCode: ${res.statusCode}`)
+	  console.log(res);
+	})
+	.catch((error) => {
+	  console.error(error);
+	})
+}
+
+test();
+
+
 
 // set an interval once a second to read the sensors:
-setInterval(checkSensors, 3000);
+//setInterval(checkSensors, 3000);
